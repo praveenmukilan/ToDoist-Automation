@@ -3,6 +3,7 @@ package com.slate.api;
 import javax.net.ssl.HttpsURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -75,11 +76,37 @@ public class ApiService {
 
 	}
 
+	public static JSONObject getSyncStatus(String response) {
+		return new JSONObject(response).getJSONObject("sync_status");
+	}
+
+	public static boolean validateSyncStatus(JSONObject syncStatus, ArrayList uuidList) {
+		boolean result = true;
+		for (Object uuid : uuidList) {
+			boolean itr_res;
+			String value = syncStatus.get(((String) uuid)).toString();
+			if (value.equalsIgnoreCase("ok")) {
+				System.out.println(uuid + " is synced");
+				itr_res = true;
+			}
+			else {
+				System.out.println(uuid + " is not synced");
+				itr_res = false;
+			}
+			result =  result && itr_res;
+		}
+		return result;
+	}
+
 	public String createProject(String projectName) {
 		JSONObject args = new JSONObject().put("name", projectName);
 		System.out.println(args.toString());
-		String prjtAddCommand = Commands.getCommands(Commands.Types.project_add, args);
-		return this.postRequest("/", prjtAddCommand);
+		Command cmd = new Command(Command.Types.project_add, args);
+		Commands.addCommand(cmd);
+		String prjtAddCommands = Commands.getCommandsAsJson();
+		String response =  this.postRequest("/", prjtAddCommands);
+		System.out.println(validateSyncStatus(getSyncStatus(response), Commands.getUuidList()));
+		return "";
 	}
 
 	public static void main(String[] args) {
