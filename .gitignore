@@ -1,0 +1,3 @@
+# ignore binaries / targets generated
+bin/
+target/
