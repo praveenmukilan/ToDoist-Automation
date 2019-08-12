@@ -38,6 +38,7 @@ public class ProjectScreen extends BaseScreen {
 	@AndroidFindBy(id = "com.todoist:id/snackbar_text")
 	private AndroidElement completeMsg;
 
+
 	public ProjectScreen(AndroidDriver<AndroidElement> drvr) {
 		super(drvr);
 		this.driver = drvr;

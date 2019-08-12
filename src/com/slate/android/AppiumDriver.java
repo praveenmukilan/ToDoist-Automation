@@ -36,6 +36,7 @@ public class AppiumDriver {
 			driver = new AndroidDriver<AndroidElement>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
 			driver.manage().timeouts().implicitlyWait(80, TimeUnit.SECONDS);
 		} catch (Exception e) {
+			System.out.println("Please check whether the Appium Server is started!");
 			e.printStackTrace();
 		}
 	}
@@ -76,7 +77,7 @@ public class AppiumDriver {
 			ProjectScreen prjScreen = new ProjectScreen(driver);
 			System.out.println(prjScreen.getProjectTitle().equals(prjtName));
 
-		} catch (InterruptedException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

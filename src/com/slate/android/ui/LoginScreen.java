@@ -45,17 +45,20 @@ public class LoginScreen extends BaseScreen {
 		PageFactory.initElements(new AppiumFieldDecorator(this.driver), this);
 	}
 
-	public void login(String email, String password) throws InterruptedException {
-		welcomeContinueEmail.click();
-		emailExistsInput.sendKeys(email);
-		continueWithEmailBtn.click();
-//		userEmail.sendKeys(email);
-		pwdElement.sendKeys(password);
-		loginBtn.click();
-		handleNewVersionRequired();
-		Thread.sleep(10000);
+	public void login(String email, String password) {
+		try {
+			welcomeContinueEmail.click();
+			emailExistsInput.sendKeys(email);
+			continueWithEmailBtn.click();
+			pwdElement.sendKeys(password);
+			loginBtn.click();
+			handleNewVersionRequired();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
+	
 
 	public void handleNewVersionRequired() {
 		if (alertTitleNewApp.isDisplayed()) {

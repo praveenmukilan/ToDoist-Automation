@@ -113,11 +113,6 @@ public class ApiService {
 		ApiService api = new ApiService("https://todoist.com/api/v7/sync", "c7179ae59e4f823220c6980c8a0deeccdcc6761d");
 		try {
 			String projectName = "Praveen Project";
-//			String urlParams = "token=19f95cac30653664f60a119ec4b3b1465bb1e9fa&"
-//					+ "commands=[{\"type\": \"project_add\", "
-//					+ "\"temp_id\": \"4df1e388-5ca6-453a-b0e8-662ebf373b6b\", \"uuid\": \"" + getRandomUuid()
-//					+ "\", \"args\": {\"name\": \"" + projectName + "\"}}]";
-
 			api.createProject(projectName);
 
 		} catch (Exception e) {
