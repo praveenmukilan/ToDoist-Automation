@@ -27,6 +27,16 @@ public class HomeScreen extends BaseScreen {
 
 	@AndroidFindBy(xpath = "//android.widget.TextView[@text='Add project']")
 	public AndroidElement addProject;
+	
+	
+	@AndroidFindBy(xpath = "//android.widget.TextView[@text='Settings']")
+	public AndroidElement settingsOption;
+	
+	@AndroidFindBy(xpath = "//android.widget.TextView[@text='Log out']")
+	public AndroidElement logoutOption;
+
+	@AndroidFindBy(id = "android:id/button1")
+	public AndroidElement logoutYesBtn;
 
 	public HomeScreen(AndroidDriver<AndroidElement> drvr) {
 		super(drvr);
@@ -37,6 +47,13 @@ public class HomeScreen extends BaseScreen {
 	public void selectProject(String name) {
 		getProjectElement(name).click();
 	}
+	
+	public void openProject(String name) {
+		hamburgerMenu.click();
+		clickProjectsOption();
+		selectProject(name);
+	}
+	
 
 	public AndroidElement getProjectElement(String name) {
 		return getElementFromList(menuList, name);
@@ -55,5 +72,12 @@ public class HomeScreen extends BaseScreen {
 			return true;
 		else
 			return false;
+	}
+	
+	public void logout() {
+		hamburgerMenu.click();
+		settingsOption.click();
+		logoutOption.click();
+		logoutYesBtn.click();
 	}
 }
