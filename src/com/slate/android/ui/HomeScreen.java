@@ -9,8 +9,8 @@ import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
-public class HomeScreen {
-	
+public class HomeScreen extends BaseScreen {
+
 	private AndroidDriver<AndroidElement> driver;
 
 	@AndroidFindBy(accessibility = "Change the current view")
@@ -24,30 +24,27 @@ public class HomeScreen {
 
 	@AndroidFindBy(id = "com.todoist:id/name")
 	private ArrayList<AndroidElement> menuList;
-	
+
 	@AndroidFindBy(xpath = "//android.widget.TextView[@text='Add project']")
 	public AndroidElement addProject;
-	
+
 	public HomeScreen(AndroidDriver<AndroidElement> drvr) {
+		super(drvr);
 		this.driver = drvr;
 		PageFactory.initElements(new AppiumFieldDecorator(this.driver), this);
 	}
-	
-	public AndroidElement getElementFromList(ArrayList<AndroidElement> list, String elementName) {
-		return list.stream().filter(x -> x.getText().equalsIgnoreCase(elementName)).findFirst().get();
-	}
-	
+
 	public void selectProject(String name) {
 		getProjectElement(name).click();
 	}
-	
+
 	public AndroidElement getProjectElement(String name) {
 		return getElementFromList(menuList, name);
 	}
-	
+
 	public void clickProjectsOption() {
 		projectsMenuOption.click();
-		if(!addProject.isDisplayed()) {
+		if (!addProject.isDisplayed()) {
 			projectsMenuOption.click();
 		}
 	}

@@ -8,7 +8,7 @@ import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
-public class LoginScreen {
+public class LoginScreen extends BaseScreen {
 
 	private AndroidDriver<AndroidElement> driver;
 
@@ -39,11 +39,8 @@ public class LoginScreen {
 	@AndroidFindBy(id = "android:id/button1")
 	public AndroidElement updateNowBtn;
 
-	// email com.todoist:id/log_in_email
-	// pwd com.todoist:id/log_in_password
-	// login button com.todoist:id/btn_log_in
-
 	public LoginScreen(AndroidDriver<AndroidElement> drvr) {
+		super(drvr);
 		this.driver = drvr;
 		PageFactory.initElements(new AppiumFieldDecorator(this.driver), this);
 	}

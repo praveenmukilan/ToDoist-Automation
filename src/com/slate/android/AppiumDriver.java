@@ -16,24 +16,32 @@ import io.appium.java_client.remote.MobileCapabilityType;
 
 import com.slate.android.ui.HomeScreen;
 import com.slate.android.ui.LoginScreen;
+import com.slate.android.ui.ProjectScreen;
 
 public class AppiumDriver {
 	public static AndroidDriver<AndroidElement> driver;
 	static DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();
 	static DefaultExecutor executor = new DefaultExecutor();
 
-	public static void setUp() throws Exception {
-
-		DesiredCapabilities capabilities = new DesiredCapabilities();
-		capabilities.setCapability("platformName", "Android");
-		capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UiAutomator2");
-		capabilities.setCapability("appPackage", "com.todoist");
-		capabilities.setCapability("app", "/Users/praveenms/Downloads/Todoist_v12.8_apkpure.com.apk");
-		capabilities.setCapability("deviceName", "emulator-5554");
-		capabilities.setCapability("autoGrantPermissions", true);
-		capabilities.setCapability("appWaitActivity", "com.todoist.activity.WelcomeActivity");
-		driver = new AndroidDriver<AndroidElement>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-		driver.manage().timeouts().implicitlyWait(80, TimeUnit.SECONDS);
+	public static void setUp() {
+		try {
+			DesiredCapabilities capabilities = new DesiredCapabilities();
+			capabilities.setCapability("platformName", "Android");
+			capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UiAutomator2");
+			capabilities.setCapability("appPackage", "com.todoist");
+			capabilities.setCapability("app", "/Users/praveenms/Downloads/Todoist_v12.8_apkpure.com.apk");
+			capabilities.setCapability("deviceName", "emulator-5554");
+			capabilities.setCapability("autoGrantPermissions", true);
+			capabilities.setCapability("appWaitActivity", "com.todoist.activity.WelcomeActivity");
+			driver = new AndroidDriver<AndroidElement>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+			driver.manage().timeouts().implicitlyWait(80, TimeUnit.SECONDS);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static AndroidDriver<AndroidElement> getDriver() {
+		return driver;
 	}
 
 	public static void main(String args[]) {
@@ -57,12 +65,17 @@ public class AppiumDriver {
 	public static void test01() {
 		try {
 			System.out.println("Running test - test01");
+			String prjtName = "mobile prjt";
 			LoginScreen loginScreen = new LoginScreen(driver);
 			loginScreen.login("praveenmukilan@gmail.com", "Letmein01");
 			HomeScreen homeScreen = new HomeScreen(driver);
 			homeScreen.hamburgerMenu.click();
 			homeScreen.clickProjectsOption();
-			homeScreen.selectProject("mobile prjt");
+			homeScreen.selectProject(prjtName);
+
+			ProjectScreen prjScreen = new ProjectScreen(driver);
+			System.out.println(prjScreen.getProjectTitle().equals(prjtName));
+
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

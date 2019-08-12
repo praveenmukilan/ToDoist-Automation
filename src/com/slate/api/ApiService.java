@@ -110,7 +110,7 @@ public class ApiService {
 	}
 
 	public static void main(String[] args) {
-		ApiService api = new ApiService("https://todoist.com/api/v7/sync", "19f95cac30653664f60a119ec4b3b1465bb1e9fa");
+		ApiService api = new ApiService("https://todoist.com/api/v7/sync", "c7179ae59e4f823220c6980c8a0deeccdcc6761d");
 		try {
 			String projectName = "Praveen Project";
 //			String urlParams = "token=19f95cac30653664f60a119ec4b3b1465bb1e9fa&"
