@@ -14,7 +14,7 @@ public class LoginScreen extends BaseScreen {
 	private AndroidDriver<AndroidElement> driver;
 
 	@AndroidFindBy(id = "com.todoist:id/btn_welcome_continue_with_email")
-	private WebElement welcomeContinueEmail; // com.todoist:id/btn_welcome_continue_with_email
+	private AndroidElement welcomeContinueEmail; 
 
 	@AndroidFindBy(id = "com.todoist:id/email_exists_input")
 	private AndroidElement emailExistsInput;
@@ -48,6 +48,7 @@ public class LoginScreen extends BaseScreen {
 
 	public void login(String email, String password) {
 		try {
+//			waitForElement(welcomeContinueEmail);
 			welcomeContinueEmail.click();
 			emailExistsInput.sendKeys(email);
 			continueWithEmailBtn.click();

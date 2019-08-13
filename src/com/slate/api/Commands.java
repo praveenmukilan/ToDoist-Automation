@@ -5,26 +5,32 @@ import org.json.JSONArray;
 
 public class Commands {
 
-	public static JSONArray cmdA = new JSONArray();
-	public static ArrayList<Command> commandList = new ArrayList<Command>();
-	public static ArrayList<String> uuidList = new ArrayList<String>();
+	public JSONArray cmdA;
+	public ArrayList<Command> commandList;
+	public ArrayList<String> uuidList;
+	
+	public Commands() {
+		commandList = new ArrayList<Command>();
+		uuidList = new ArrayList<String>();
+		cmdA = new JSONArray();
+	}
 
-	public static String getCommandsAsJson() {
-		System.out.println(cmdA.toString());
+	public  String getCommandsAsJson() {
+//		System.out.println(cmdA.toString());
 		return "&commands=" + cmdA.toString();
 	}
 
-	public static ArrayList<Command> getCommandsList() {
-		return commandList;
+	public ArrayList<Command> getCommandsList() {
+		return this.commandList;
 	}
 
-	public static ArrayList getUuidList() {
-		return uuidList;
+	public ArrayList getUuidList() {
+		return this.uuidList;
 	}
 
-	public static void addCommand(Command cmd) {
-		cmdA.put(cmd.getCmdJson());
-		commandList.add(cmd);
-		uuidList.add(cmd.uuid);
+	public void addCommand(Command cmd) {
+		this.cmdA.put(cmd.getCmdJson());
+		this.commandList.add(cmd);
+		this.uuidList.add(cmd.uuid);
 	}
 }

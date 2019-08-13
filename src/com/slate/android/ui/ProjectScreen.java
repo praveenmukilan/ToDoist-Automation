@@ -38,7 +38,6 @@ public class ProjectScreen extends BaseScreen {
 	@AndroidFindBy(id = "com.todoist:id/snackbar_text")
 	private AndroidElement completeMsg;
 
-
 	public ProjectScreen(AndroidDriver<AndroidElement> drvr) {
 		super(drvr);
 		this.driver = drvr;
@@ -58,6 +57,7 @@ public class ProjectScreen extends BaseScreen {
 	}
 
 	public void createTask(String taskName) {
+		System.out.println("creating task: " + taskName);
 		plusBtn.click();
 		taskTitleMessage.sendKeys(taskName);
 		createTaskBtn.click();
@@ -67,7 +67,7 @@ public class ProjectScreen extends BaseScreen {
 	public AndroidElement getTask(String taskName) {
 		return getElementFromList(getTasksList(), taskName);
 	}
-	
+
 	public ArrayList<AndroidElement> getTasksList() {
 		return (ArrayList<AndroidElement>) driver.findElementsById("com.todoist:id/text");
 	}

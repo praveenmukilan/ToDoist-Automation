@@ -53,8 +53,10 @@ public class HomeScreen extends BaseScreen {
 	}
 	
 	public void openProject(String name) {
+		System.out.println("opening project: " + name);
 		hamburgerMenu.click();
 		clickProjectsOption();
+		waitForElement(name);
 		selectProject(name);
 	}
 	

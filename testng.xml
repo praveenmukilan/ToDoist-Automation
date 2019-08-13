@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="slate-studio-test" preserve-order="true">
+<suite name="slate-studio-suite" preserve-order="true">
 
-	<test name="regular" preserve-order="true">
+	<test name="todoist test" preserve-order="true">
 
 		<classes>
 			<class name="com.slate.android.ui.tests.EndToEndTests">

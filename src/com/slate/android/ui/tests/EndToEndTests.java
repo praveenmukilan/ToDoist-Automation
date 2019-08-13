@@ -39,23 +39,24 @@ public class EndToEndTests {
 		loginScr = new LoginScreen(driver);
 		homeScr = new HomeScreen(driver);
 		prjScr = new ProjectScreen(driver);
-		
+
 	}
 
 	private String getRandomString() {
 		return RandomStringUtils.randomAlphabetic(5);
 	}
-	
-//	@BeforeMethod
+
+	@BeforeMethod
 	public void setup() {
 		System.out.println("Before method");
+		driver.launchApp();
 		loginScr.login("praveenmukilan@gmail.com", "Letmein01");
 	}
-	
+
 	@AfterMethod
 	public void tearDown() {
-		System.out.println("After method");
-		homeScr.logout();
+//		System.out.println("After method");
+//		homeScr.logout();
 	}
 
 	@Test
@@ -63,61 +64,72 @@ public class EndToEndTests {
 		try {
 			System.out.println("Create Project - Test");
 			api.createProject(prjtName);
-			login();
 			homeScr.openProject(prjtName);
-			System.out.println(prjScr.getProjectTitle().equals(prjtName));
+			Assert.assertTrue(prjScr.getProjectTitle().equals(prjtName));
+			System.out.println("Test: Create Project - pass\n");
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Test: Create Project - fail\n");
+			System.out.println(e.getMessage());
+
 		}
 	}
 
 	@Test
 	public void createTask() {
-		System.out.println("Create Task - Test");
-		String name = "SlateStudio Task - " + getRandomString();
-		System.out.println(name);
-		login();
-		prjtName = "SlateStudio Project - JQKxm";
-		homeScr.openProject(prjtName);
-		prjScr.createTask(name);
-		waitForSecs(3);
-		String taskId = api.getTaskId(name);
 
-		Assert.assertNotNull(taskId);
-		System.out.println(taskId);
+		try {
+			System.out.println("Create Task - Test");
+			String name = "SlateStudio Task - " + getRandomString();
+			System.out.println(name);
+//		prjtName = "SlateStudio Project - JQKxm";
+			homeScr.openProject(prjtName);
+			prjScr.createTask(name);
+			waitForSecs(3);
+			String taskId = api.getTaskId(name);
+
+			Assert.assertNotNull(taskId);
+			System.out.println("Test: Create Task via mobile phone - pass\n");
+		} catch (Exception e) {
+			System.out.println("Test: Create Task via mobile phone - fail\n");
+			System.out.println(e.getMessage());
+		}
 
 	}
-	
+
 	@Test
 	public void reopenTask() {
 		System.out.println("Reopen Task - Test");
 		String name = "SlateStudio Task - " + getRandomString();
-		System.out.println(name);
-		// 3.1 Open mobile application
-		login();
-		prjtName = "SlateStudio Project - JQKxm";
-		// 3.2 Open test project
-		homeScr.openProject(prjtName);
-		prjScr.createTask(name);
-		Assert.assertTrue(prjScr.isTaskDisplayed(name));
-		waitForSecs(3);
-		String taskId = api.getTaskId(name);
-		Assert.assertNotNull(taskId);
-		prjScr.completeTask(name);
-		waitForSecs(3);
-		String [] taskIds = new String [] {taskId};
-		api.uncompleteTasks(taskIds);
-		//verify in mobile whether task appears
-		prjScr.waitForElement(name);
-//		waitForSecs(15);
-		Assert.assertTrue(prjScr.isTaskDisplayed(name));
-		
+		try {
+			homeScr.openProject(prjtName);
+			prjScr.createTask(name);
+			Assert.assertTrue(prjScr.isTaskDisplayed(name));
+			waitForSecs(3);
+			String taskId = api.getTaskId(name);
+//		String taskId = "3340922735";
+			Assert.assertNotNull(taskId);
+			prjScr.completeTask(name);
+//			waitForSecs(10);
+			waitForSecs(10);
+			String[] taskIds = new String[] { taskId };
+			api.uncompleteTasks(taskIds);
+//			waitForSecs(15);
+			waitForSecs(10);
+			// verify in mobile whether task appears
+			prjScr.waitForElement(name);
+			Assert.assertTrue(prjScr.isTaskDisplayed(name));
+			System.out.println("Test: Reopen Task - pass\n");
+		} catch (Exception e) {
+			System.out.println("Test: Reopen Task - fail\n");
+			System.out.println(e.getMessage());
+		}
+
 	}
-	
+
 	public void waitForSecs(long secs) {
 		try {
 			Thread.sleep(secs * 1000);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println("Fail to wait!");
 			e.printStackTrace();
 		}
@@ -127,7 +139,7 @@ public class EndToEndTests {
 	public void tearDownSuite() {
 		this.driver.quit();
 	}
-	
+
 	private void login() {
 		loginScr.login("praveenmukilan@gmail.com", "Letmein01");
 	}
@@ -135,9 +147,15 @@ public class EndToEndTests {
 	public static void main(String args[]) {
 		EndToEndTests test = new EndToEndTests();
 		test.setupSuite();
-//		test.createProject();
-//		test.createTask();
+		test.setup();
+		test.createProject();
+		test.tearDown();
+		test.setup();
+		test.createTask();
+		test.tearDown();
+		test.setup();
 		test.reopenTask();
+		test.tearDown();
 	}
 
 }
