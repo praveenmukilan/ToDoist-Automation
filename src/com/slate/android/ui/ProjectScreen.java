@@ -89,5 +89,9 @@ public class ProjectScreen extends BaseScreen {
 	public boolean isTaskCompleted() {
 		return completeMsg.getText().equals("Completed.");
 	}
+	
+	public boolean isLoggedIn() {
+		return plusBtn.isDisplayed();
+	}
 
 }

@@ -23,24 +23,25 @@ public class AppiumDriver {
 	static DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();
 	static DefaultExecutor executor = new DefaultExecutor();
 
-	public static void setUp() {
+	public static void setUp(String deviceName, String appiumPort) {
 		try {
 			DesiredCapabilities capabilities = new DesiredCapabilities();
 			capabilities.setCapability("platformName", "Android");
 			capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UiAutomator2");
 			capabilities.setCapability("appPackage", "com.todoist");
 			capabilities.setCapability("app", "/Users/praveenms/Downloads/Todoist_v12.8_apkpure.com.apk");
-			capabilities.setCapability("deviceName", "emulator-5554");
+			capabilities.setCapability("deviceName", deviceName);
 			capabilities.setCapability("autoGrantPermissions", true);
 			capabilities.setCapability("appWaitActivity", "com.todoist.activity.WelcomeActivity");
-			driver = new AndroidDriver<AndroidElement>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+			driver = new AndroidDriver<AndroidElement>(new URL("http://127.0.0.1:" + appiumPort + "/wd/hub"),
+					capabilities);
 			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		} catch (Exception e) {
 			System.out.println("Please check whether the Appium Server is started!");
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static AndroidDriver<AndroidElement> getDriver() {
 		return driver;
 	}
@@ -48,9 +49,9 @@ public class AppiumDriver {
 	public static void main(String args[]) {
 
 		try {
-			launchEmulator(" @Pixel_3_API_28");
+			launchEmulator("@Pixel_3_API_28");
 			Thread.sleep(20000);
-			setUp();
+//			setUp();
 			test01();
 			tearDown();
 		} catch (Exception e) {

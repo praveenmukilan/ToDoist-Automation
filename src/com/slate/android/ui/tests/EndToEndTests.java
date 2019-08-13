@@ -32,8 +32,10 @@ public class EndToEndTests {
 	@BeforeSuite
 	public void setupSuite() {
 		System.out.println("Before Suite");
-		api = new ApiService(URL, token);
-		AppiumDriver.setUp();
+		api = new ApiService(URL, getToken());
+		AppiumDriver.setUp(getDeviceName(), getAppiumServerPort());
+//		getDeviceName(); getAppiumServerPort();
+//		AppiumDriver.setUp("","");
 		this.driver = AppiumDriver.getDriver();
 		prjtName += getRandomString();
 		loginScr = new LoginScreen(driver);
@@ -42,20 +44,16 @@ public class EndToEndTests {
 
 	}
 
-	private String getRandomString() {
-		return RandomStringUtils.randomAlphabetic(5);
-	}
-
 	@BeforeMethod
 	public void setup() {
 		System.out.println("Before method");
 		driver.launchApp();
-		loginScr.login("praveenmukilan@gmail.com", "Letmein01");
+		login();
 	}
 
 	@AfterMethod
 	public void tearDown() {
-//		System.out.println("After method");
+		System.out.println("After method\n");
 //		homeScr.logout();
 	}
 
@@ -66,9 +64,9 @@ public class EndToEndTests {
 			api.createProject(prjtName);
 			homeScr.openProject(prjtName);
 			Assert.assertTrue(prjScr.getProjectTitle().equals(prjtName));
-			System.out.println("Test: Create Project - pass\n");
+			System.out.println("Test: Create Project - pass");
 		} catch (Exception e) {
-			System.out.println("Test: Create Project - fail\n");
+			System.out.println("Test: Create Project - fail");
 			System.out.println(e.getMessage());
 
 		}
@@ -81,16 +79,15 @@ public class EndToEndTests {
 			System.out.println("Create Task - Test");
 			String name = "SlateStudio Task - " + getRandomString();
 			System.out.println(name);
-//		prjtName = "SlateStudio Project - JQKxm";
 			homeScr.openProject(prjtName);
 			prjScr.createTask(name);
 			waitForSecs(3);
 			String taskId = api.getTaskId(name);
 
 			Assert.assertNotNull(taskId);
-			System.out.println("Test: Create Task via mobile phone - pass\n");
+			System.out.println("Test: Create Task via mobile phone - pass");
 		} catch (Exception e) {
-			System.out.println("Test: Create Task via mobile phone - fail\n");
+			System.out.println("Test: Create Task via mobile phone - fail");
 			System.out.println(e.getMessage());
 		}
 
@@ -118,9 +115,9 @@ public class EndToEndTests {
 			// verify in mobile whether task appears
 			prjScr.waitForElement(name);
 			Assert.assertTrue(prjScr.isTaskDisplayed(name));
-			System.out.println("Test: Reopen Task - pass\n");
+			System.out.println("Test: Reopen Task - pass");
 		} catch (Exception e) {
-			System.out.println("Test: Reopen Task - fail\n");
+			System.out.println("Test: Reopen Task - fail");
 			System.out.println(e.getMessage());
 		}
 
@@ -141,7 +138,38 @@ public class EndToEndTests {
 	}
 
 	private void login() {
-		loginScr.login("praveenmukilan@gmail.com", "Letmein01");
+		String [] credentails = getCredentials();
+		loginScr.login(credentails[0], credentails[1]);
+		Assert.assertTrue(prjScr.isLoggedIn());
+	}
+
+	private String getDeviceName() {
+		return System.getProperty("emulator", "emulator-5554");
+
+	}
+
+	private String getAppiumServerPort() {
+		return System.getProperty("server.port", "4723");
+	}
+
+	private String getRandomString() {
+		return RandomStringUtils.randomAlphabetic(5);
+	}
+
+	private String getToken() {
+		return System.getProperty("apiToken", "c7179ae59e4f823220c6980c8a0deeccdcc6761d");
+	}
+
+	private String[] getCredentials() {
+		String userEmail = System.getProperty("email");
+		String userPassword = System.getProperty("pwd");
+		
+		System.out.println(userEmail + userPassword);
+
+		if (userEmail == null || userPassword == null) {
+			return new String[] { "praveenmukilan@gmail.com", "Letmein01" };
+		} else
+			return new String[] { userEmail, userPassword };
 	}
 
 	public static void main(String args[]) {
