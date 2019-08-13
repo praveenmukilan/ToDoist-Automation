@@ -1,6 +1,7 @@
 package com.slate.android.ui.tests;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
@@ -72,20 +73,43 @@ public class EndToEndTests {
 
 	@Test
 	public void createTask() {
+		System.out.println("Create Task - Test");
 		String name = "SlateStudio Task - " + getRandomString();
+		System.out.println(name);
 		login();
+		prjtName = "SlateStudio Project - JQKxm";
 		homeScr.openProject(prjtName);
 		prjScr.createTask(name);
+		waitForSecs(3);
+		String taskId = api.getTaskId(name);
+
+		Assert.assertNotNull(taskId);
+		System.out.println(taskId);
 
 	}
 	
 	@Test
 	public void reopenTask() {
+		System.out.println("Reopen Task - Test");
 		String name = "SlateStudio Task - " + getRandomString();
 		login();
 		homeScr.openProject(prjtName);
 		prjScr.createTask(name);
+		waitForSecs(10);
+		String taskId = api.getTaskId(name);
 		prjScr.completeTask(name);
+		//uncomplete task here
+		//verify in mobile whether task appears
+		
+	}
+	
+	public void waitForSecs(long secs) {
+		try {
+			Thread.sleep(secs * 1000);
+		} catch(Exception e) {
+			System.out.println("Fail to wait!");
+			e.printStackTrace();
+		}
 	}
 
 	@AfterSuite
@@ -97,12 +121,12 @@ public class EndToEndTests {
 		loginScr.login("praveenmukilan@gmail.com", "Letmein01");
 	}
 
-//	public static void main(String args[]) {
-//		EndToEndTests test = new EndToEndTests();
-//		test.setupSuite();
+	public static void main(String args[]) {
+		EndToEndTests test = new EndToEndTests();
+		test.setupSuite();
 //		test.createProject();
 //		test.createTask();
-//		test.reopenTask();
-//	}
+		test.reopenTask();
+	}
 
 }

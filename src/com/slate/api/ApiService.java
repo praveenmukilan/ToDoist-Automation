@@ -10,6 +10,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import org.json.JSONObject;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 /**
  * ApiService class is to connect to the APIs and provide the response to the
  * caller.
@@ -24,12 +29,13 @@ public class ApiService {
 		token = tkn;
 	}
 
-	public String postRequest(String path, String commands) {
+	public String postRequest(String path, String formdata) {
 		String response = "";
 		HttpsURLConnection conn = null;
 		try {
 			URL endPoint = new URL(baseURL + path);
-			String urlParameters = "token=" + this.token + "&commands=" + commands;
+			String urlParameters = "token=" + this.token + formdata;
+			System.out.println(urlParameters);
 			byte[] postData = urlParameters.getBytes("UTF-8");
 			conn = (HttpsURLConnection) endPoint.openConnection();
 			conn.setRequestMethod("POST");
@@ -108,12 +114,38 @@ public class ApiService {
 		System.out.println(validateSyncStatus(getSyncStatus(response), Commands.getUuidList()));
 		return "";
 	}
+	
+//	$ curl https://todoist.com/api/v7/sync \
+//	    -d token=0123456789abcdef0123456789abcdef01234567 \
+//	    -d sync_token='*' \
+//	    -d resource_types='["all"]'
+	
+	public String getTaskId(String taskName) {
+		System.out.println("getTaskId");
+		String formdata = "&sync_token=\"*\"&resource_types=[\"items\"]";
+		String response = this.postRequest("/", formdata);
+		System.out.println(taskName);
+		JsonParser parser = new JsonParser();
+		JsonObject json = (JsonObject) parser.parse(response);
+		JsonArray itemA = (JsonArray) json.get("items");
+		
+		for (JsonElement je : itemA) {
+			JsonObject jo = (JsonObject) je;
+			String actual = jo.get("content").toString();
+			actual = actual.replaceAll("^\"|\"$", "");
+			if(actual.equals(taskName)) {
+				return jo.get("id").toString();
+			}
+		}
+		return null;
+	}
 
 	public static void main(String[] args) {
 		ApiService api = new ApiService("https://todoist.com/api/v7/sync", "c7179ae59e4f823220c6980c8a0deeccdcc6761d");
 		try {
-			String projectName = "Praveen Project";
-			api.createProject(projectName);
+//			String projectName = "Praveen Project";
+//			api.createProject(projectName);
+			System.out.println(api.getTaskId("SlateStudio Task - vjvce"));
 
 		} catch (Exception e) {
 			e.printStackTrace();

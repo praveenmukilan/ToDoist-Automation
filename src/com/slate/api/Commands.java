@@ -11,7 +11,7 @@ public class Commands {
 
 	public static String getCommandsAsJson() {
 		System.out.println(cmdA.toString());
-		return cmdA.toString();
+		return "&commands=" + cmdA.toString();
 	}
 
 	public static ArrayList<Command> getCommandsList() {
