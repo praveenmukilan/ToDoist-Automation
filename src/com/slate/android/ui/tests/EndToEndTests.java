@@ -30,7 +30,7 @@ public class EndToEndTests {
 	public void setupSuite() {
 		System.out.println("Before Suite");
 		api = new ApiService(URL, getToken());
-		AppiumDriver.setUp(getDeviceName(), getAppiumServerPort());
+		AppiumDriver.setUp(getDeviceName(), getAppiumServerHost(), getAppiumServerPort());
 		this.driver = AppiumDriver.getDriver();
 		prjtName += getRandomString();
 		loginScr = new LoginScreen(driver);
@@ -141,6 +141,11 @@ public class EndToEndTests {
 		return System.getProperty("server.port", "4723");
 	}
 
+	private String getAppiumServerHost() {
+		System.out.println(System.getProperty("server.ip"));
+		return System.getProperty("server.ip", "127.0.0.1");
+	}
+	
 	private String getRandomString() {
 		return RandomStringUtils.randomAlphabetic(5);
 	}

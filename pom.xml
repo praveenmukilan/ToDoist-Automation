@@ -24,6 +24,7 @@
 					<useSystemClassLoader>false</useSystemClassLoader>
 					<systemPropertyVariables>
 						<emulator>${emulator}</emulator>
+						<appiumIp>${server.ip}</appiumIp>
 						<appiumPort>${server.port}</appiumPort>
 						<apiToken>${token}</apiToken>
 						<email>${email}</email>

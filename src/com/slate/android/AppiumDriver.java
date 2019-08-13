@@ -23,7 +23,7 @@ public class AppiumDriver {
 	static DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();
 	static DefaultExecutor executor = new DefaultExecutor();
 
-	public static void setUp(String deviceName, String appiumPort) {
+	public static void setUp(String deviceName, String appiumServer, String appiumPort) {
 		try {
 			DesiredCapabilities capabilities = new DesiredCapabilities();
 			capabilities.setCapability("platformName", "Android");
@@ -33,7 +33,7 @@ public class AppiumDriver {
 			capabilities.setCapability("deviceName", deviceName);
 			capabilities.setCapability("autoGrantPermissions", true);
 			capabilities.setCapability("appWaitActivity", "com.todoist.activity.WelcomeActivity");
-			driver = new AndroidDriver<AndroidElement>(new URL("http://127.0.0.1:" + appiumPort + "/wd/hub"),
+			driver = new AndroidDriver<AndroidElement>(new URL("http://" + appiumServer + ":" + appiumPort + "/wd/hub"),
 					capabilities);
 			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		} catch (Exception e) {
