@@ -37,7 +37,6 @@ public class ApiService {
 		try {
 			URL endPoint = new URL(baseURL + path);
 			String urlParameters = "token=" + this.token + formdata;
-//			System.out.println(urlParameters);
 			byte[] postData = urlParameters.getBytes("UTF-8");
 			conn = (HttpsURLConnection) endPoint.openConnection();
 			conn.setRequestMethod("POST");
@@ -51,7 +50,6 @@ public class ApiService {
 						"Failed : HTTP error code : " + conn.getResponseCode() + conn.getResponseMessage());
 			} else {
 				response = getResponse(conn);
-//				System.out.println(response);
 			}
 			conn.disconnect();
 
@@ -72,8 +70,6 @@ public class ApiService {
 		String response = "";
 		try {
 			br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-
-//			System.out.println("Server Response ... Success\n");
 			while ((output = br.readLine()) != null) {
 				response += output;
 			}
@@ -88,16 +84,14 @@ public class ApiService {
 		return new JSONObject(response).getJSONObject("sync_status");
 	}
 
-	public static boolean validateSyncStatus(JSONObject syncStatus, ArrayList uuidList) {
+	public static boolean validateSyncStatus(JSONObject syncStatus, ArrayList<String> uuidList) {
 		boolean result = true;
 		for (Object uuid : uuidList) {
 			boolean itr_res;
 			String value = syncStatus.get(((String) uuid)).toString();
 			if (value.equalsIgnoreCase("ok")) {
-//				System.out.println(uuid + " is synced");
 				itr_res = true;
 			} else {
-//				System.out.println(uuid + " is not synced");
 				itr_res = false;
 			}
 			result = result && itr_res;
@@ -107,7 +101,6 @@ public class ApiService {
 
 	public String createProject(String projectName) {
 		JSONObject args = new JSONObject().put("name", projectName);
-//		System.out.println(args.toString());
 		cmd = new Command(Command.Types.project_add, args);
 		cmds = new Commands();
 		cmds.addCommand(cmd);
@@ -117,15 +110,9 @@ public class ApiService {
 		return "";
 	}
 
-//	$ curl https://todoist.com/api/v7/sync \
-//	    -d token=0123456789abcdef0123456789abcdef01234567 \
-//	    -d sync_token='*' \
-//	    -d resource_types='["all"]'
-
 	public String getTaskId(String taskName) {
 		String formdata = "&sync_token=\"*\"&resource_types=[\"items\"]";
 		String response = this.postRequest("/", formdata);
-//		System.out.println(taskName);
 		JsonParser parser = new JsonParser();
 		JsonObject json = (JsonObject) parser.parse(response);
 		JsonArray itemA = (JsonArray) json.get("items");
@@ -141,10 +128,6 @@ public class ApiService {
 		return null;
 	}
 
-//	curl https://todoist.com/api/v7/sync \
-//	    -d token=0123456789abcdef0123456789abcdef01234567 \
-//	    -d commands='[{"type": "item_uncomplete", "uuid": "710a60e1-174a-4313-bb9f-4df01e0349fd", "args": {"ids": [33548400]}}]'
-
 	public void uncompleteTasks(String[] taskIds) {
 		StringBuffer ids = new StringBuffer("[");
 		for (String id : taskIds) {
@@ -152,26 +135,12 @@ public class ApiService {
 		}
 		ids.append("]");
 		JSONObject args = new JSONObject().put("ids", ids.toString());
-//		System.out.println(args.toString());
 		Command cmd = new Command(Command.Types.item_uncomplete, args);
 		cmds = new Commands();
 		cmds.addCommand(cmd);
 		String itemUncompleteCommands = cmds.getCommandsAsJson();
 		String response = this.postRequest("/", itemUncompleteCommands);
 		validateSyncStatus(getSyncStatus(response), cmds.getUuidList());
-	}
-
-	public static void main(String[] args) {
-		ApiService api = new ApiService("https://todoist.com/api/v7/sync", "c7179ae59e4f823220c6980c8a0deeccdcc6761d");
-		try {
-//			String projectName = "Praveen Project";
-//			api.createProject(projectName);
-			System.out.println(api.getTaskId("SlateStudio Task - vjvce"));
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 	}
 
 }

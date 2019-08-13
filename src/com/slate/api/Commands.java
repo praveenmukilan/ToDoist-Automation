@@ -24,7 +24,7 @@ public class Commands {
 		return this.commandList;
 	}
 
-	public ArrayList getUuidList() {
+	public ArrayList<String> getUuidList() {
 		return this.uuidList;
 	}
 
