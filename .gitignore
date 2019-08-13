@@ -1,3 +1,4 @@
 # ignore binaries / targets generated
 bin/
 target/
+**/.DS_Store
