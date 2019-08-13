@@ -13,6 +13,7 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import io.appium.java_client.android.AndroidDriver;
@@ -45,8 +46,9 @@ public class EndToEndTests {
 	@BeforeMethod
 	public void setup() {
 		System.out.println("Before method");
-		driver.launchApp();
-		login();
+//		driver.launchApp();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
 	}
 
 	@AfterMethod
@@ -58,13 +60,15 @@ public class EndToEndTests {
 	public void createProject() {
 		try {
 			System.out.println("Create Project - Test");
+			System.out.println("\t> create project via api");
 			api.createProject(prjtName);
+			login();
 			homeScr.openProject(prjtName);
 			Assert.assertTrue(prjScr.getProjectTitle().equals(prjtName));
-			System.out.println("Test: Create Project - pass");
+			System.out.println("\t> Test: Create Project - pass");
 		} catch (Exception e) {
-			System.out.println("Test: Create Project - fail");
-			System.out.println(e.getMessage());
+			System.out.println("\t> Test: Create Project - fail");
+			System.out.println("\t> " + e.getMessage());
 
 		}
 	}
@@ -73,18 +77,19 @@ public class EndToEndTests {
 	public void createTask() {
 
 		try {
-			System.out.println("Create Task - Test");
+			System.out.println("Create Task via App - Test");
 			String name = "SlateStudio Task - " + getRandomString();
-			System.out.println(name);
 			homeScr.openProject(prjtName);
+			System.out.println("\t> create task via mobile phone");
 			prjScr.createTask(name);
 			waitForSecs(3);
+			System.out.println("\t> verify task created via API");
 			String taskId = api.getTaskId(name);
 			Assert.assertNotNull(taskId);
-			System.out.println("Test: Create Task via mobile phone - pass");
+			System.out.println("\t> Test: Create Task via mobile phone - pass");
 		} catch (Exception e) {
-			System.out.println("Test: Create Task via mobile phone - fail");
-			System.out.println(e.getMessage());
+			System.out.println("\t> Test: Create Task via mobile phone - fail");
+			System.out.println("\t> "+ e.getMessage());
 		}
 
 	}
@@ -94,20 +99,25 @@ public class EndToEndTests {
 		System.out.println("Reopen Task - Test");
 		String name = "SlateStudio Task - " + getRandomString();
 		try {
+			System.out.println("\t> Open test project");
 			homeScr.openProject(prjtName);
+			System.out.println("\t> create test task via mobile app");
 			prjScr.createTask(name);
 			Assert.assertTrue(prjScr.isTaskDisplayed(name));
 			waitForSecs(3);
 			String taskId = api.getTaskId(name);
 			Assert.assertNotNull(taskId);
+			System.out.println("\t> complete test task via mobile app");
 			prjScr.completeTask(name);
 			waitForSecs(10);
 			String[] taskIds = new String[] { taskId };
+			System.out.println("\t> reopen test task via API");
 			api.uncompleteTasks(taskIds);
 			waitForSecs(10);
 			prjScr.waitForElement(name);
+			System.out.println("\t> verify reopened task appears in mobile app");
 			Assert.assertTrue(prjScr.isTaskDisplayed(name));
-			System.out.println("Test: Reopen Task - pass");
+			System.out.println("\t> Test: Reopen Task - pass");
 		} catch (Exception e) {
 			System.out.println("Test: Reopen Task - fail");
 			System.out.println(e.getMessage());

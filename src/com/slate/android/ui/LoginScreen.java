@@ -64,7 +64,7 @@ public class LoginScreen extends BaseScreen {
 				remindMeLaterBtn.click();
 			}
 		} catch (NoSuchElementException e) {
-			System.out.println("Alert is not present!");
+			System.out.println("\t> Alert is not present!");
 		}
 	}
 	

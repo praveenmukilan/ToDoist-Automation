@@ -49,7 +49,7 @@ public class HomeScreen extends BaseScreen {
 	}
 
 	public void openProject(String name) {
-		System.out.println("opening project: " + name);
+		System.out.println("\t> opening project: " + name);
 		hamburgerMenu.click();
 		clickProjectsOption();
 		waitForElement(name);
@@ -62,9 +62,10 @@ public class HomeScreen extends BaseScreen {
 
 	public void clickProjectsOption() {
 		projectsMenuOption.click();
-		if (!addProject.isDisplayed()) {
+		if (isElementPresent(addProject))
+			return;
+		else
 			projectsMenuOption.click();
-		}
 	}
 
 	public boolean isProjectPresent(String projectName) {

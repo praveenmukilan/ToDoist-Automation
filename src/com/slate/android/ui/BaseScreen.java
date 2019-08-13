@@ -60,4 +60,12 @@ public class BaseScreen {
 		wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//android.widget.TextView[@text=\""+text+"\"]")));
 	}
 	
+	public boolean isElementPresent(AndroidElement e) {
+		try {
+			return e.isDisplayed();
+		} catch(Exception d) {
+			return false;
+		}
+	}
+	
 }

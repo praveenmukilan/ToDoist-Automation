@@ -56,7 +56,7 @@ public class ProjectScreen extends BaseScreen {
 	}
 
 	public void createTask(String taskName) {
-		System.out.println("creating task: " + taskName);
+		System.out.println("\t> creating task: " + taskName);
 		plusBtn.click();
 		taskTitleMessage.sendKeys(taskName);
 		createTaskBtn.click();
