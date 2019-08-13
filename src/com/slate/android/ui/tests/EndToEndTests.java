@@ -11,6 +11,9 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
+
+import java.io.File;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -30,7 +33,7 @@ public class EndToEndTests {
 	public void setupSuite() {
 		System.out.println("Before Suite");
 		api = new ApiService(URL, getToken());
-		AppiumDriver.setUp(getDeviceName(), getAppiumServerHost(), getAppiumServerPort());
+		AppiumDriver.setUp(getDeviceName(), getAppiumServerHost(), getAppiumServerPort(), getApp());
 		this.driver = AppiumDriver.getDriver();
 		prjtName += getRandomString();
 		loginScr = new LoginScreen(driver);
@@ -142,7 +145,6 @@ public class EndToEndTests {
 	}
 
 	private String getAppiumServerHost() {
-		System.out.println(System.getProperty("server.ip"));
 		return System.getProperty("server.ip", "127.0.0.1");
 	}
 	
@@ -161,6 +163,10 @@ public class EndToEndTests {
 			return new String[] { "praveenmukilan@gmail.com", "Letmein01" };
 		} else
 			return new String[] { userEmail, userPassword };
+	}
+	
+	private File getApp() {
+		return new File("Todoist_v12.8_apkpure.com.apk");
 	}
 
 //	public static void main(String args[]) {

@@ -1,5 +1,6 @@
 package com.slate.android;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
@@ -23,13 +24,13 @@ public class AppiumDriver {
 	static DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();
 	static DefaultExecutor executor = new DefaultExecutor();
 
-	public static void setUp(String deviceName, String appiumServer, String appiumPort) {
+	public static void setUp(String deviceName, String appiumServer, String appiumPort, File app) {
 		try {
 			DesiredCapabilities capabilities = new DesiredCapabilities();
 			capabilities.setCapability("platformName", "Android");
 			capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UiAutomator2");
 			capabilities.setCapability("appPackage", "com.todoist");
-			capabilities.setCapability("app", "/Users/praveenms/Downloads/Todoist_v12.8_apkpure.com.apk");
+			capabilities.setCapability("app", app);
 			capabilities.setCapability("deviceName", deviceName);
 			capabilities.setCapability("autoGrantPermissions", true);
 			capabilities.setCapability("appWaitActivity", "com.todoist.activity.WelcomeActivity");
