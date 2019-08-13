@@ -9,6 +9,11 @@ import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
+/**
+ * ProjectScreen pageobject holds Projects, Tasks related functionalities
+ * @author praveenms
+ *
+ */
 public class ProjectScreen extends BaseScreen {
 
 	public AndroidDriver<AndroidElement> driver;

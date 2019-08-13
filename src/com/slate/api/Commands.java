@@ -3,6 +3,11 @@ package com.slate.api;
 import java.util.ArrayList;
 import org.json.JSONArray;
 
+/**
+ * Commands is a wrapper for command and builds the array of commands for batch or single command processing.
+ * @author praveenms
+ *
+ */
 public class Commands {
 
 	public JSONArray cmdA;

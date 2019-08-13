@@ -15,6 +15,11 @@ import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.touch.offset.PointOption;
 
+/**
+ * BaseScreen pageobject from which other pageobjects inherit from. 
+ * This class holds the functionalities that are common to all the pageobjects.
+ * @author praveenms
+ **/
 public class BaseScreen {
 	private AndroidDriver<AndroidElement> driver;
 	

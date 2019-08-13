@@ -3,6 +3,11 @@ package com.slate.api;
 import java.util.UUID;
 import org.json.JSONObject;
 
+/**
+ * Command class is to build various command arguments for the REST clients to consume.
+ * @author praveenms
+ *
+ */
 public class Command {
 		
 		Types type;

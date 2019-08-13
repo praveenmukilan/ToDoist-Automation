@@ -7,6 +7,11 @@ import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
+/***
+ * HomeScreen holds the locators and functionalities on the HomeScreen of the app.
+ * @author praveenms
+ *
+ */
 public class HomeScreen extends BaseScreen {
 
 	private AndroidDriver<AndroidElement> driver;

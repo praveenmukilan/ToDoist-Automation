@@ -11,14 +11,17 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
-
 import java.io.File;
 import java.util.concurrent.TimeUnit;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 
+/**
+ * EndToEndTests holds all the tests and is the testng java class that runs all the test methods
+ * @author praveenms
+ *
+ */
 public class EndToEndTests {
 
 	public static String URL = "https://todoist.com/api/v7/sync";
@@ -89,7 +92,7 @@ public class EndToEndTests {
 			System.out.println("\t> Test: Create Task via mobile phone - pass");
 		} catch (Exception e) {
 			System.out.println("\t> Test: Create Task via mobile phone - fail");
-			System.out.println("\t> "+ e.getMessage());
+			System.out.println("\t> " + e.getMessage());
 		}
 
 	}
@@ -157,7 +160,7 @@ public class EndToEndTests {
 	private String getAppiumServerHost() {
 		return System.getProperty("server.ip", "127.0.0.1");
 	}
-	
+
 	private String getRandomString() {
 		return RandomStringUtils.randomAlphabetic(5);
 	}
@@ -174,23 +177,9 @@ public class EndToEndTests {
 		} else
 			return new String[] { userEmail, userPassword };
 	}
-	
+
 	private File getApp() {
 		return new File("Todoist_v12.8_apkpure.com.apk");
 	}
-
-//	public static void main(String args[]) {
-//		EndToEndTests test = new EndToEndTests();
-//		test.setupSuite();
-//		test.setup();
-//		test.createProject();
-//		test.tearDown();
-//		test.setup();
-//		test.createTask();
-//		test.tearDown();
-//		test.setup();
-//		test.reopenTask();
-//		test.tearDown();
-//	}
 
 }

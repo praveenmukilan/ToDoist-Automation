@@ -30,7 +30,13 @@ public class ApiService {
 		baseURL = url;
 		token = tkn;
 	}
-
+	
+	/**
+	 * postRequest makes POST to the Rest APIs specified in the path. Formdata is url encoded using UTF-8
+	 * @param path - the endpoint to which the POST call is sent to
+	 * @param formdata  - the form urlencoded data that is sent in the body of the POST request
+	 * @return - returns the response from the REST endpoint
+	 */
 	public String postRequest(String path, String formdata) {
 		String response = "";
 		HttpsURLConnection conn = null;

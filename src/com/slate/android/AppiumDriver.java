@@ -19,11 +19,24 @@ import com.slate.android.ui.HomeScreen;
 import com.slate.android.ui.LoginScreen;
 import com.slate.android.ui.ProjectScreen;
 
+/**
+ * This class handles the AppiumDriver initialization, setup of Appium related tasks.
+ * Capability to launch Appium Server & Emulators programmatically can be added here. 
+ * @author praveenms
+ *
+ */
 public class AppiumDriver {
 	public static AndroidDriver<AndroidElement> driver;
 	static DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();
 	static DefaultExecutor executor = new DefaultExecutor();
 
+	/**
+	 * This method sets the AndroidDriver for the tests with the given capabilities
+	 * @param deviceName
+	 * @param appiumServer
+	 * @param appiumPort
+	 * @param app
+	 */
 	public static void setUp(String deviceName, String appiumServer, String appiumPort, File app) {
 		try {
 			DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -47,41 +60,8 @@ public class AppiumDriver {
 		return driver;
 	}
 
-	public static void main(String args[]) {
-
-		try {
-			launchEmulator("@Pixel_3_API_28");
-			Thread.sleep(20000);
-//			setUp();
-			test01();
-			tearDown();
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-
-	}
-
 	public static void tearDown() throws Exception {
 		driver.quit();
-	}
-
-	public static void test01() {
-		try {
-			System.out.println("Running test - test01");
-			String prjtName = "mobile prjt";
-			LoginScreen loginScreen = new LoginScreen(driver);
-			loginScreen.login("praveenmukilan@gmail.com", "Letmein01");
-			HomeScreen homeScreen = new HomeScreen(driver);
-			homeScreen.hamburgerMenu.click();
-			homeScreen.clickProjectsOption();
-			homeScreen.selectProject(prjtName);
-
-			ProjectScreen prjScreen = new ProjectScreen(driver);
-			System.out.println(prjScreen.getProjectTitle().equals(prjtName));
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	public static void launchEmulator(String emulatorName) throws ExecuteException, IOException {
