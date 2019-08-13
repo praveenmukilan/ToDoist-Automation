@@ -64,8 +64,12 @@ public class ProjectScreen extends BaseScreen {
 		backBtn.click();
 	}
 
-	private AndroidElement getTask(String taskName) {
-		return getElementFromList(tasksList, taskName);
+	public AndroidElement getTask(String taskName) {
+		return getElementFromList(getTasksList(), taskName);
+	}
+	
+	public ArrayList<AndroidElement> getTasksList() {
+		return (ArrayList<AndroidElement>) driver.findElementsById("com.todoist:id/text");
 	}
 
 	public boolean isTaskDisplayed(String taskName) {

@@ -34,7 +34,7 @@ public class AppiumDriver {
 			capabilities.setCapability("autoGrantPermissions", true);
 			capabilities.setCapability("appWaitActivity", "com.todoist.activity.WelcomeActivity");
 			driver = new AndroidDriver<AndroidElement>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-			driver.manage().timeouts().implicitlyWait(80, TimeUnit.SECONDS);
+			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		} catch (Exception e) {
 			System.out.println("Please check whether the Appium Server is started!");
 			e.printStackTrace();

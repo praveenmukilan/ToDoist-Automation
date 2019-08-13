@@ -36,7 +36,8 @@ public class Command {
 		}
 		
 		enum Types {
-			project_add
+			project_add,
+			item_uncomplete
 		}
 		
 

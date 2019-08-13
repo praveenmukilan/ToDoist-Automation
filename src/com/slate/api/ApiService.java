@@ -35,7 +35,7 @@ public class ApiService {
 		try {
 			URL endPoint = new URL(baseURL + path);
 			String urlParameters = "token=" + this.token + formdata;
-			System.out.println(urlParameters);
+//			System.out.println(urlParameters);
 			byte[] postData = urlParameters.getBytes("UTF-8");
 			conn = (HttpsURLConnection) endPoint.openConnection();
 			conn.setRequestMethod("POST");
@@ -124,7 +124,7 @@ public class ApiService {
 		System.out.println("getTaskId");
 		String formdata = "&sync_token=\"*\"&resource_types=[\"items\"]";
 		String response = this.postRequest("/", formdata);
-		System.out.println(taskName);
+//		System.out.println(taskName);
 		JsonParser parser = new JsonParser();
 		JsonObject json = (JsonObject) parser.parse(response);
 		JsonArray itemA = (JsonArray) json.get("items");
@@ -138,6 +138,26 @@ public class ApiService {
 			}
 		}
 		return null;
+	}
+	
+//	curl https://todoist.com/api/v7/sync \
+//	    -d token=0123456789abcdef0123456789abcdef01234567 \
+//	    -d commands='[{"type": "item_uncomplete", "uuid": "710a60e1-174a-4313-bb9f-4df01e0349fd", "args": {"ids": [33548400]}}]'
+
+	
+	public void uncompleteTasks(String [] taskIds) {
+		StringBuffer ids = new StringBuffer("[");
+		for (String id : taskIds) {
+			ids.append(id);
+		}
+		ids.append("]");
+		JSONObject args = new JSONObject().put("ids", ids.toString());
+		System.out.println(args.toString());
+		Command cmd = new Command(Command.Types.item_uncomplete, args);
+		Commands.addCommand(cmd);
+		String itemUncompleteCommands = Commands.getCommandsAsJson();
+		String response =  this.postRequest("/", itemUncompleteCommands);
+		System.out.println(validateSyncStatus(getSyncStatus(response), Commands.getUuidList()));
 	}
 
 	public static void main(String[] args) {

@@ -1,5 +1,6 @@
 package com.slate.android.ui;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
@@ -58,11 +59,14 @@ public class LoginScreen extends BaseScreen {
 		}
 
 	}
-	
 
 	public void handleNewVersionRequired() {
-		if (alertTitleNewApp.isDisplayed()) {
-			remindMeLaterBtn.click();
+		try {
+			if (alertTitleNewApp.isDisplayed()) {
+				remindMeLaterBtn.click();
+			}
+		} catch (NoSuchElementException e) {
+			System.out.println("Alert is not present!");
 		}
 	}
 

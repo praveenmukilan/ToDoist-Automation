@@ -92,14 +92,25 @@ public class EndToEndTests {
 	public void reopenTask() {
 		System.out.println("Reopen Task - Test");
 		String name = "SlateStudio Task - " + getRandomString();
+		System.out.println(name);
+		// 3.1 Open mobile application
 		login();
+		prjtName = "SlateStudio Project - JQKxm";
+		// 3.2 Open test project
 		homeScr.openProject(prjtName);
 		prjScr.createTask(name);
-		waitForSecs(10);
+		Assert.assertTrue(prjScr.isTaskDisplayed(name));
+		waitForSecs(3);
 		String taskId = api.getTaskId(name);
+		Assert.assertNotNull(taskId);
 		prjScr.completeTask(name);
-		//uncomplete task here
+		waitForSecs(3);
+		String [] taskIds = new String [] {taskId};
+		api.uncompleteTasks(taskIds);
 		//verify in mobile whether task appears
+		prjScr.waitForElement(name);
+//		waitForSecs(15);
+		Assert.assertTrue(prjScr.isTaskDisplayed(name));
 		
 	}
 	
