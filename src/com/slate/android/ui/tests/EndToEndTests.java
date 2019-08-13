@@ -18,7 +18,9 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 
 /**
- * EndToEndTests holds all the tests and is the testng java class that runs all the test methods
+ * EndToEndTests holds all the tests and is the testng java class that runs all
+ * the test methods
+ * 
  * @author praveenms
  *
  */

@@ -8,7 +8,9 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
 /**
- * LoginScreen pageobject holds the login functionalities and locators in the Welcome, Login screens
+ * LoginScreen pageobject holds the login functionalities and locators in the
+ * Welcome, Login screens
+ * 
  * @author praveenms
  *
  */
@@ -17,7 +19,7 @@ public class LoginScreen extends BaseScreen {
 	private AndroidDriver<AndroidElement> driver;
 
 	@AndroidFindBy(id = "com.todoist:id/btn_welcome_continue_with_email")
-	private AndroidElement welcomeContinueEmail; 
+	private AndroidElement welcomeContinueEmail;
 
 	@AndroidFindBy(id = "com.todoist:id/email_exists_input")
 	private AndroidElement emailExistsInput;
@@ -72,6 +74,5 @@ public class LoginScreen extends BaseScreen {
 			System.out.println("\t> Alert is not present!");
 		}
 	}
-	
 
 }

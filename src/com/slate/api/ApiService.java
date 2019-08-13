@@ -30,11 +30,14 @@ public class ApiService {
 		baseURL = url;
 		token = tkn;
 	}
-	
+
 	/**
-	 * postRequest makes POST to the Rest APIs specified in the path. Formdata is url encoded using UTF-8
-	 * @param path - the endpoint to which the POST call is sent to
-	 * @param formdata  - the form urlencoded data that is sent in the body of the POST request
+	 * postRequest makes POST to the Rest APIs specified in the path. Formdata is
+	 * url encoded using UTF-8
+	 * 
+	 * @param path     - the endpoint to which the POST call is sent to
+	 * @param formdata - the form urlencoded data that is sent in the body of the
+	 *                 POST request
 	 * @return - returns the response from the REST endpoint
 	 */
 	public String postRequest(String path, String formdata) {
@@ -105,6 +108,7 @@ public class ApiService {
 		return result;
 	}
 
+	// TODO: This method could be part of a Project request class
 	public String createProject(String projectName) {
 		JSONObject args = new JSONObject().put("name", projectName);
 		cmd = new Command(Command.Types.project_add, args);
@@ -116,6 +120,7 @@ public class ApiService {
 		return "";
 	}
 
+	// TODO: This method could be part of a Item / Task request class
 	public String getTaskId(String taskName) {
 		String formdata = "&sync_token=\"*\"&resource_types=[\"items\"]";
 		String response = this.postRequest("/", formdata);
@@ -134,6 +139,7 @@ public class ApiService {
 		return null;
 	}
 
+	// TODO: This method could be part of a Item / Task request class
 	public void uncompleteTasks(String[] taskIds) {
 		StringBuffer ids = new StringBuffer("[");
 		for (String id : taskIds) {

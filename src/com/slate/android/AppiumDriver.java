@@ -15,13 +15,11 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.remote.MobileCapabilityType;
 
-import com.slate.android.ui.HomeScreen;
-import com.slate.android.ui.LoginScreen;
-import com.slate.android.ui.ProjectScreen;
-
 /**
- * This class handles the AppiumDriver initialization, setup of Appium related tasks.
- * Capability to launch Appium Server & Emulators programmatically can be added here. 
+ * This class handles the AppiumDriver initialization, setup of Appium related
+ * tasks. Capability to launch Appium Server & Emulators programmatically can be
+ * added here.
+ * 
  * @author praveenms
  *
  */
@@ -32,6 +30,7 @@ public class AppiumDriver {
 
 	/**
 	 * This method sets the AndroidDriver for the tests with the given capabilities
+	 * 
 	 * @param deviceName
 	 * @param appiumServer
 	 * @param appiumPort

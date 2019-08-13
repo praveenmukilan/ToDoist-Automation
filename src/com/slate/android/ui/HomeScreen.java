@@ -8,7 +8,9 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
 /***
- * HomeScreen holds the locators and functionalities on the HomeScreen of the app.
+ * HomeScreen holds the locators and functionalities on the HomeScreen of the
+ * app.
+ * 
  * @author praveenms
  *
  */
