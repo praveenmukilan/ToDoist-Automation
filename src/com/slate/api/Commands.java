@@ -10,9 +10,9 @@ import org.json.JSONArray;
  */
 public class Commands {
 
-	public JSONArray cmdA;
-	public ArrayList<Command> commandList;
-	public ArrayList<String> uuidList;
+	private JSONArray cmdA;
+	private ArrayList<Command> commandList;
+	private ArrayList<String> uuidList;
 	
 	public Commands() {
 		commandList = new ArrayList<Command>();

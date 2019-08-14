@@ -31,19 +31,19 @@ public class HomeScreen extends BaseScreen {
 	private ArrayList<AndroidElement> menuList;
 
 	@AndroidFindBy(xpath = "//android.widget.TextView[@text='Add project']")
-	public AndroidElement addProject;
+	private AndroidElement addProject;
 
 	@AndroidFindBy(xpath = "//android.widget.TextView[@text='Settings']")
-	public AndroidElement settingsOption;
+	private AndroidElement settingsOption;
 
 	@AndroidFindBy(xpath = "//android.widget.TextView[@text='Log out']")
-	public AndroidElement logoutOption;
+	private AndroidElement logoutOption;
 
 	@AndroidFindBy(id = "android:id/button1")
-	public AndroidElement logoutYesBtn;
+	private AndroidElement logoutYesBtn;
 
 	@AndroidFindBy(xpath = "//android.widget.TextView[@text='Support']")
-	public AndroidElement supportOption;
+	private AndroidElement supportOption;
 
 	public HomeScreen(AndroidDriver<AndroidElement> drvr) {
 		super(drvr);
@@ -51,7 +51,7 @@ public class HomeScreen extends BaseScreen {
 		PageFactory.initElements(new AppiumFieldDecorator(this.driver), this);
 	}
 
-	public void selectProject(String name) {
+	protected void selectProject(String name) {
 		getProjectElement(name).click();
 	}
 
@@ -63,11 +63,11 @@ public class HomeScreen extends BaseScreen {
 		selectProject(name);
 	}
 
-	public AndroidElement getProjectElement(String name) {
+	protected AndroidElement getProjectElement(String name) {
 		return getElementFromList(menuList, name);
 	}
 
-	public void clickProjectsOption() {
+	protected void clickProjectsOption() {
 		projectsMenuOption.click();
 		if (isElementPresent(addProject))
 			return;
@@ -75,7 +75,7 @@ public class HomeScreen extends BaseScreen {
 			projectsMenuOption.click();
 	}
 
-	public boolean isProjectPresent(String projectName) {
+	protected boolean isProjectPresent(String projectName) {
 		hamburgerMenu.click();
 		if (getProjectElement(projectName) != null)
 			return true;

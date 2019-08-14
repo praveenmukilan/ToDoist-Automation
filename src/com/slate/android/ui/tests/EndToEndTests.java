@@ -26,9 +26,9 @@ import io.appium.java_client.android.AndroidElement;
  */
 public class EndToEndTests {
 
-	public static String URL = "https://todoist.com/api/v7/sync";
-	public static String token = "c7179ae59e4f823220c6980c8a0deeccdcc6761d";
-	public static String prjtName = "SlateStudio Project - ";
+	private static String URL = "https://todoist.com/api/v7/sync";
+	private static String token = "c7179ae59e4f823220c6980c8a0deeccdcc6761d";
+	private static String prjtName = "SlateStudio Project - ";
 	AndroidDriver<AndroidElement> driver;
 	ApiService api;
 	LoginScreen loginScr;
@@ -130,7 +130,7 @@ public class EndToEndTests {
 
 	}
 
-	public void waitForSecs(long secs) {
+	private void waitForSecs(long secs) {
 		try {
 			Thread.sleep(secs * 1000);
 		} catch (Exception e) {
@@ -168,7 +168,7 @@ public class EndToEndTests {
 	}
 
 	private String getToken() {
-		return System.getProperty("apiToken", "c7179ae59e4f823220c6980c8a0deeccdcc6761d");
+		return System.getProperty("apiToken", token);
 	}
 
 	private String[] getCredentials() {

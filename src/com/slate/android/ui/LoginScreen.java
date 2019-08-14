@@ -31,19 +31,19 @@ public class LoginScreen extends BaseScreen {
 	private AndroidElement userEmail;
 
 	@AndroidFindBy(id = "com.todoist:id/log_in_password")
-	public AndroidElement pwdElement;
+	private AndroidElement pwdElement;
 
 	@AndroidFindBy(id = "com.todoist:id/btn_log_in")
-	public AndroidElement loginBtn;
+	private AndroidElement loginBtn;
 
 	@AndroidFindBy(id = "com.todoist:id/alertTitle")
-	public AndroidElement alertTitleNewApp;
+	private AndroidElement alertTitleNewApp;
 
 	@AndroidFindBy(id = "android:id/button2")
-	public AndroidElement remindMeLaterBtn;
+	private AndroidElement remindMeLaterBtn;
 
 	@AndroidFindBy(id = "android:id/button1")
-	public AndroidElement updateNowBtn;
+	private AndroidElement updateNowBtn;
 
 	public LoginScreen(AndroidDriver<AndroidElement> drvr) {
 		super(drvr);
@@ -65,7 +65,7 @@ public class LoginScreen extends BaseScreen {
 
 	}
 
-	public void handleNewVersionRequired() {
+	private void handleNewVersionRequired() {
 		try {
 			if (alertTitleNewApp.isDisplayed()) {
 				remindMeLaterBtn.click();

@@ -17,10 +17,10 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
  */
 public class ProjectScreen extends BaseScreen {
 
-	public AndroidDriver<AndroidElement> driver;
+	private AndroidDriver<AndroidElement> driver;
 
 	@AndroidFindBy(id = "com.todoist:id/toolbar")
-	public AndroidElement viewGroup;
+	private AndroidElement viewGroup;
 
 	@AndroidFindBy(id = "com.todoist:id/fab")
 	private AndroidElement plusBtn;
@@ -57,7 +57,7 @@ public class ProjectScreen extends BaseScreen {
 		return (AndroidElement) viewGroup.findElement(By.xpath("//android.widget.TextView"));
 	}
 
-	public boolean isProjectScreen(String prjtName) {
+	protected boolean isProjectScreen(String prjtName) {
 		return getProjectElement().getText().contentEquals(prjtName);
 	}
 
@@ -69,7 +69,7 @@ public class ProjectScreen extends BaseScreen {
 		backBtn.click();
 	}
 
-	public AndroidElement getTask(String taskName) {
+	private AndroidElement getTask(String taskName) {
 		return getElementFromList(getTasksList(), taskName);
 	}
 

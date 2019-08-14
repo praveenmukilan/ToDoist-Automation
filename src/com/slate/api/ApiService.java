@@ -73,7 +73,7 @@ public class ApiService {
 		return response;
 	}
 
-	public static String getResponse(HttpsURLConnection conn) {
+	private static String getResponse(HttpsURLConnection conn) {
 		BufferedReader br;
 		String output;
 		String response = "";
@@ -89,11 +89,11 @@ public class ApiService {
 
 	}
 
-	public static JSONObject getSyncStatus(String response) {
+	private static JSONObject getSyncStatus(String response) {
 		return new JSONObject(response).getJSONObject("sync_status");
 	}
 
-	public static boolean validateSyncStatus(JSONObject syncStatus, ArrayList<String> uuidList) {
+	private static boolean validateSyncStatus(JSONObject syncStatus, ArrayList<String> uuidList) {
 		boolean result = true;
 		for (Object uuid : uuidList) {
 			boolean itr_res;
